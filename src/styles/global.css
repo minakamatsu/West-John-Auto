@@ -23,9 +23,11 @@
 
   --maxw: 1160px;
   --header-h: 74px;
+  --callbar-h: 0px;
 
   --font-head: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --tap: 48px; /* minimum comfortable tap target */
 }
 
 * {
@@ -44,8 +46,11 @@ body {
   color: var(--ink);
   background: var(--bg);
   line-height: 1.6;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: rgba(10, 46, 110, 0.12);
+  overflow-x: hidden;
 }
 
 img {
@@ -123,12 +128,14 @@ h1, h2, h3, h4 {
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 1rem;
+  min-height: var(--tap);
   padding: 14px 26px;
   border-radius: 999px;
   border: 2px solid transparent;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
   white-space: nowrap;
+  touch-action: manipulation;
 }
 
 .btn:active {
@@ -197,4 +204,43 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Disable hover lifts on coarse pointers (phones/tablets) */
+@media (hover: none) {
+  .btn--primary:hover,
+  .btn--blue:hover,
+  .service-card:hover,
+  .contact__phone:hover {
+    transform: none;
+  }
+}
+
+/* Mobile base tokens */
+@media (max-width: 720px) {
+  :root {
+    --header-h: 64px;
+    --callbar-h: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  html {
+    scroll-padding-top: calc(var(--header-h) + 8px);
+    scroll-padding-bottom: var(--callbar-h);
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+
+  .section__head {
+    margin-bottom: 28px;
+  }
+
+  .section__title {
+    font-size: clamp(1.85rem, 7.5vw, 2.4rem);
+  }
+
+  .section__lead {
+    font-size: 1rem;
+  }
 }

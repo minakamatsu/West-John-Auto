@@ -18,6 +18,10 @@ export default function Hero() {
             honest diagnostics, quality repairs, and flawless body work. From oil changes and brakes
             to collision, paint, and Tesla OEM service, we keep you safely on the road.
           </p>
+          <p className="hero__lead hero__lead--mobile">
+            {business.name} <span className="hero__cn">{business.chineseName}</span> — trusted in
+            Hicksville since {business.since}. Honest repairs, auto body, and Tesla OEM service.
+          </p>
 
           <div className="hero__actions">
             <a href={business.phoneHref} className="btn btn--primary hero__call">

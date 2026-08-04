@@ -51,8 +51,17 @@ export default function Header() {
           {business.phoneDisplay}
         </a>
 
+        <a
+          href={business.phoneHref}
+          className="header__call-icon"
+          aria-label={`Call ${business.phoneDisplay}`}
+        >
+          <Phone />
+        </a>
+
         <button
           className="header__burger"
+          type="button"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
