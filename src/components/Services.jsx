@@ -1,7 +1,11 @@
+import { useState } from 'react'
 import { serviceGroups, business } from '../data/business.js'
-import { ServiceIcon, Check, Phone } from './Icons.jsx'
+import { ServiceIcon, Phone } from './Icons.jsx'
 
 export default function Services() {
+  // First category open by default so visitors see how it works without clutter.
+  const [openId, setOpenId] = useState(serviceGroups[0]?.title ?? null)
+
   return (
     <section className="section section--soft" id="services">
       <div className="container">
@@ -11,33 +15,61 @@ export default function Services() {
             Complete Auto Care, <span className="accent">Under One Roof</span>
           </h2>
           <p className="section__lead">
-            Whether it&apos;s routine maintenance, a check-engine light, or full collision repair,
-            our certified technicians handle it all — quickly, honestly, and done right the first
-            time.
+            Tap a category to see what&apos;s included — brakes, body work, inspections, Tesla OEM,
+            and more.
           </p>
         </div>
 
-        <div className="services__grid">
-          {serviceGroups.map((group) => (
-            <article className="service-card reveal" key={group.title}>
-              <div className="service-card__icon">
-                <ServiceIcon name={group.icon} />
+        <div className="services-list reveal" role="list">
+          {serviceGroups.map((group) => {
+            const isOpen = openId === group.title
+            const panelId = `service-panel-${group.icon}`
+            const btnId = `service-btn-${group.icon}`
+
+            return (
+              <div
+                className={`services-item ${isOpen ? 'is-open' : ''}`}
+                key={group.title}
+                role="listitem"
+              >
+                <button
+                  type="button"
+                  id={btnId}
+                  className="services-item__trigger"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpenId(isOpen ? null : group.title)}
+                >
+                  <span className="services-item__icon" aria-hidden="true">
+                    <ServiceIcon name={group.icon} />
+                  </span>
+                  <span className="services-item__meta">
+                    <span className="services-item__title">{group.title}</span>
+                    <span className="services-item__count">{group.items.length} services</span>
+                  </span>
+                  <span className="services-item__chevron" aria-hidden="true" />
+                </button>
+
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={btnId}
+                  className="services-item__panel"
+                  hidden={!isOpen}
+                >
+                  <ul className="services-item__chips">
+                    {group.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <h3 className="service-card__title">{group.title}</h3>
-              <ul className="service-card__list">
-                {group.items.map((item) => (
-                  <li key={item}>
-                    <Check />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
+            )
+          })}
         </div>
 
         <div className="services__cta reveal">
-          <p>Not sure what your car needs? Get a free diagnostic and honest advice.</p>
+          <p>Not sure what your car needs? Call for a free diagnostic.</p>
           <a href={business.phoneHref} className="btn btn--primary">
             <Phone />
             Call {business.phoneDisplay}

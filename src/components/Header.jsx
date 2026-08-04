@@ -22,16 +22,22 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
-    return () => (document.body.style.overflow = '')
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [open])
 
+  const closeMenu = () => setOpen(false)
+
   return (
-    <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
+    <header className={`header ${scrolled ? 'header--scrolled' : ''} ${open ? 'header--menu-open' : ''}`}>
       <div className="container header__inner">
-        <a href="#top" className="brand" aria-label={`${business.name} home`}>
-          <span className="brand__badge">WJ</span>
+        <a href="#top" className="brand" aria-label={`${business.name} home`} onClick={closeMenu}>
+          <span className="brand__badge" aria-hidden="true">
+            WJ
+          </span>
           <span className="brand__text">
-            <span className="brand__name">{business.name}</span>
+            <span className="brand__name">West John Auto</span>
             <span className="brand__sub">
               {business.chineseName} · Since {business.since}
             </span>
@@ -46,43 +52,48 @@ export default function Header() {
           ))}
         </nav>
 
-        <a href={business.phoneHref} className="btn btn--primary header__cta">
-          <Phone />
-          {business.phoneDisplay}
-        </a>
+        <div className="header__actions">
+          <a href={business.phoneHref} className="btn btn--primary header__cta">
+            <Phone />
+            {business.phoneDisplay}
+          </a>
 
-        <a
-          href={business.phoneHref}
-          className="header__call-icon"
-          aria-label={`Call ${business.phoneDisplay}`}
-        >
-          <Phone />
-        </a>
+          <a
+            href={business.phoneHref}
+            className="header__call-icon"
+            aria-label={`Call ${business.phoneDisplay}`}
+          >
+            <Phone />
+          </a>
 
-        <button
-          className="header__burger"
-          type="button"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <Close /> : <Menu />}
-        </button>
+          <button
+            className="header__burger"
+            type="button"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <Close /> : <Menu />}
+          </button>
+        </div>
       </div>
 
-      <div className={`mobile-menu ${open ? 'mobile-menu--open' : ''}`}>
-        <nav className="mobile-menu__nav" aria-label="Mobile">
-          {links.map((l) => (
-            <a key={l.href} href={l.href} className="mobile-menu__link" onClick={() => setOpen(false)}>
-              {l.label}
-            </a>
-          ))}
-        </nav>
-        <a href={business.phoneHref} className="btn btn--primary mobile-menu__cta">
-          <Phone />
-          Call {business.phoneDisplay}
-        </a>
-      </div>
+      {open ? (
+        <div id="mobile-nav" className="mobile-menu mobile-menu--open">
+          <nav className="mobile-menu__nav" aria-label="Mobile">
+            {links.map((l) => (
+              <a key={l.href} href={l.href} className="mobile-menu__link" onClick={closeMenu}>
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <a href={business.phoneHref} className="btn btn--primary mobile-menu__cta">
+            <Phone />
+            Call {business.phoneDisplay}
+          </a>
+        </div>
+      ) : null}
     </header>
   )
 }

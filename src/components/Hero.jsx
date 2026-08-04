@@ -6,7 +6,7 @@ export default function Hero() {
     <section className="hero" id="top">
       <div className="hero__bg" aria-hidden="true" />
       <div className="container hero__inner">
-        <div className="hero__content reveal">
+        <div className="hero__content">
           <span className="hero__since">Family owned & trusted since {business.since}</span>
           <h1 className="hero__title">
             Expert Auto Repair &amp;
@@ -44,7 +44,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <aside className="hero__card reveal" aria-label="Visit us">
+        <aside className="hero__card" aria-label="Visit us">
           <div className="hero__card-head">
             <span className="hero__card-badge">Open Today</span>
             <h2 className="hero__card-title">Stop by the shop</h2>

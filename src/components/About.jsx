@@ -19,11 +19,10 @@ export default function About() {
               <span className="about__photo-wj">WJ</span>
               <span className="about__photo-name">{business.name}</span>
               <span className="about__photo-cn">{business.chineseName}</span>
+              <span className="about__photo-rating">
+                {business.rating}★ · {business.reviewCount} reviews
+              </span>
             </div>
-          </div>
-          <div className="about__stat-chip">
-            <strong>{business.rating}★</strong>
-            <span>{business.reviewCount} reviews</span>
           </div>
         </div>
 
