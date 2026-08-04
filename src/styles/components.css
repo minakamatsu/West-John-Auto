@@ -779,7 +779,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-  padding: 56px 20px 40px;
+  padding: 96px 20px 48px;
 }
 
 .footer__brand {
