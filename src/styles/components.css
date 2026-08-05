@@ -36,22 +36,14 @@
   overflow: hidden;
 }
 
-.brand__badge {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: var(--yellow);
-  color: var(--blue-900);
-  font-family: var(--font-head);
-  font-weight: 800;
-  font-size: 1.15rem;
+/* Official logo mark (transparent PNG) — replaces yellow WJ badge */
+.brand__logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: 112px;
   flex: none;
-  overflow: hidden;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  object-fit: contain;
 }
 
 .brand__text {
@@ -252,6 +244,28 @@
   color: #fff;
   margin-bottom: 14px;
   text-shadow: 0 2px 18px rgba(7, 31, 78, 0.45);
+}
+
+/* Desktop keeps original title; mobile swaps in a shorter line */
+.hero__title-desktop {
+  display: contents;
+}
+
+.hero__title-mobile,
+.hero__wheel,
+.hero__desc-mobile,
+.hero__rating-count-mobile {
+  display: none;
+}
+
+.hero__rating-count-desktop {
+  display: inline;
+}
+
+/* Beat .btn { display: inline-flex } from global.css on desktop */
+.hero__cta-mobile.btn,
+.hero__cta-call-mobile.btn {
+  display: none;
 }
 
 .hero__title-accent {
@@ -1043,10 +1057,8 @@
     display: none;
   }
 
-  .brand__badge {
-    width: 36px;
+  .brand__logo {
     height: 36px;
-    font-size: 1.05rem;
   }
 
   .brand__name {
@@ -1057,31 +1069,138 @@
     gap: 10px;
   }
 
+  /*
+   * Mobile landing — keep airy hero copy, but trim only the empty
+   * bottom so the yellow trust bar fits in the first viewport
+   * (services stay below the fold). Desktop stays frozen V1.
+   */
   .hero {
-    /* Clear fixed header + sticky call bar so nothing sits underneath */
-    padding: calc(var(--header-h) + 20px) 0 calc(24px + var(--callbar-h));
-    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Full viewport minus call bar minus ~trust bar height
+       (extra ~36px = removed rating line so yellow moves up) */
+    min-height: calc(100svh - var(--callbar-h) - 204px);
+    padding: calc(var(--header-h) + 40px) 0 20px;
+    overflow: hidden;
+  }
+
+  /* Soft blue → yellow blend into the trust bar (no hard edge) */
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 72px;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(7, 31, 78, 0) 0%,
+      rgba(7, 31, 78, 0.35) 40%,
+      #ffce00 100%
+    );
   }
 
   .hero__bg {
     background-image:
       linear-gradient(
         180deg,
-        rgba(7, 31, 78, 0.88) 0%,
-        rgba(7, 31, 78, 0.78) 55%,
-        rgba(7, 31, 78, 0.72) 100%
+        rgba(7, 31, 78, 0.5) 0%,
+        rgba(7, 31, 78, 0.4) 30%,
+        rgba(7, 31, 78, 0.78) 65%,
+        rgba(7, 31, 78, 0.95) 100%
       ),
       url('/images/storefront.png');
-    background-position: center 35%;
+    background-position: 45% 70%;
+  }
+
+  .hero__bg::after {
+    background: linear-gradient(
+      to top,
+      rgba(7, 31, 78, 0.92) 0%,
+      rgba(7, 31, 78, 0.35) 45%,
+      rgba(7, 31, 78, 0.15) 100%
+    );
+  }
+
+  /* Photo wheel accent — right side, behind copy, spins */
+  .hero__wheel {
+    display: block;
+    position: absolute;
+    right: -14%;
+    top: 48%;
+    width: min(70vw, 270px);
+    z-index: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    animation: hero-wheel-spin 12s linear infinite;
+  }
+
+  .hero__wheel img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45));
+  }
+
+  @keyframes hero-wheel-spin {
+    from {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+      transform: translateY(-50%) rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__wheel {
+      animation: none;
+    }
   }
 
   .hero__inner {
-    gap: 22px;
+    display: block;
+    width: 100%;
+    gap: 0;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__content {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Drop pill badge / visit card / redundant CTAs from first screen */
+  .hero__since,
+  .hero__card,
+  .hero__call,
+  .hero__services,
+  .hero__title-desktop {
+    display: none !important;
+  }
+
+  .hero__title-mobile {
+    display: inline;
+  }
+
+  /* Keep "REPAIR & BODY" together on one line */
+  .hero__title-phrase {
+    white-space: nowrap;
   }
 
   .hero__title {
-    font-size: clamp(1.85rem, 8vw, 2.35rem);
-    margin-bottom: 10px;
+    font-size: clamp(2.55rem, 11.5vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    margin: 0 0 20px;
+    max-width: 16ch;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
   }
 
   .hero__lead {
@@ -1090,18 +1209,38 @@
 
   .hero__lead--mobile {
     display: block;
-    font-size: 0.95rem;
-    margin-bottom: 16px;
-  }
-
-  .hero__since {
-    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.9);
+    /* Push CTAs down by ~2× this line’s type size */
+    margin: 0 0 calc(32px + 2em);
+    max-width: 16rem;
   }
 
   .hero__actions {
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 14px;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .hero__cta-mobile.btn,
+  .hero__cta-call-mobile.btn {
+    display: inline-flex;
+    width: min(100%, 14.5rem);
+    max-width: none;
+    min-height: 46px;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    justify-content: center;
+  }
+
+  .hero__cta-call-mobile.btn {
+    background: rgba(7, 31, 78, 0.45);
+    border-color: rgba(255, 255, 255, 0.75);
+    color: #fff;
+    backdrop-filter: blur(6px);
   }
 
   .hero__actions .btn,
@@ -1111,25 +1250,23 @@
     width: 100%;
   }
 
+  .hero__actions .hero__cta-mobile.btn,
+  .hero__actions .hero__cta-call-mobile.btn {
+    width: min(100%, 14.5rem);
+  }
+
+  .hero__desc-mobile {
+    display: block;
+    margin: 18px 0 0;
+    max-width: 18rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgba(232, 238, 248, 0.88);
+  }
+
+  /* Rating lives in the yellow trust bar — drop duplicate from hero */
   .hero__rating {
-    margin-bottom: 2px;
-  }
-
-  .hero__card {
-    padding: 16px;
-  }
-
-  .hero__card-title {
-    font-size: 1.25rem;
-  }
-
-  .hero__card-list {
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .hero__card-note {
-    margin-top: 10px;
+    display: none !important;
   }
 
   .trustbar {
@@ -1138,8 +1275,8 @@
   }
 
   .trustbar__inner {
-    padding: 36px 16px;
-    gap: 18px 8px;
+    padding: 32px 16px;
+    gap: 16px 8px;
   }
 
   .trustbar__value {
@@ -1280,10 +1417,6 @@
 }
 
 @media (max-width: 460px) {
-  .hero__title br {
-    display: none;
-  }
-
   .mobile-callbar__text strong {
     font-size: 1rem;
   }

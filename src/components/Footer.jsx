@@ -8,7 +8,14 @@ export default function Footer() {
       <div className="footer__main">
         <div className="container footer__inner">
           <div className="footer__brand">
-            <span className="brand__badge">WJ</span>
+            <img
+              className="brand__logo"
+              src="/images/logo-mark.png"
+              alt=""
+              width="48"
+              height="36"
+              decoding="async"
+            />
             <div>
               <span className="footer__name">{business.name}</span>
               <span className="footer__cn">

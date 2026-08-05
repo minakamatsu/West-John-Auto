@@ -33,9 +33,15 @@ export default function Header() {
     <header className={`header ${scrolled ? 'header--scrolled' : ''} ${open ? 'header--menu-open' : ''}`}>
       <div className="container header__inner">
         <a href="#top" className="brand" aria-label={`${business.name} home`} onClick={closeMenu}>
-          <span className="brand__badge" aria-hidden="true">
-            WJ
-          </span>
+          {/* Official logo mark (transparent PNG) — replaces old yellow WJ badge */}
+          <img
+            className="brand__logo"
+            src="/images/logo-mark.png"
+            alt=""
+            width="48"
+            height="36"
+            decoding="async"
+          />
           <span className="brand__text">
             <span className="brand__name">West John Auto</span>
             <span className="brand__sub">
