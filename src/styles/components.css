@@ -1316,6 +1316,7 @@
       url('/images/team.jpg');
   }
 
+  /* Match top inset to bottom inset (space below Call CTA → section edge) */
   .about__inner {
     padding-top: 56px;
     padding-bottom: 56px;
@@ -1333,6 +1334,16 @@
   .about__actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* Mobile only: drop the rating line under the Call button */
+  .about__rating {
+    display: none !important;
+  }
+
+  /* Clear gap after previous section so About does not kiss the services CTA */
+  #services.section {
+    padding-bottom: 56px;
   }
 
   .contact__grid {
@@ -1353,24 +1364,60 @@
   }
 
   .footer__main {
-    padding: 2rem 0;
+    padding: 1.25rem 0;
   }
 
   .footer__inner {
-    gap: 36px;
+    gap: 20px;
   }
 
   .footer__cols {
-    gap: 24px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .footer__col h4 {
+    margin-bottom: 10px;
+  }
+
+  .footer__col a {
+    padding: 4px 0;
+  }
+
+  /* Explore as compact 2×2 tap targets instead of a tall list */
+  .footer__col--explore {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .footer__col--explore h4 {
+    grid-column: 1 / -1;
+    margin-bottom: 2px;
+  }
+
+  .footer__col--explore a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 8px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.88rem;
   }
 
   .footer__bottom {
-    padding: 22px 0;
+    padding: 16px 0;
   }
 
   .footer__bottom-inner {
     flex-direction: column;
     text-align: center;
+    gap: 6px;
   }
 
   .mobile-callbar {
@@ -1381,10 +1428,6 @@
 @media (max-width: 460px) {
   .hero__title br {
     display: none;
-  }
-
-  .footer__cols {
-    grid-template-columns: 1fr;
   }
 
   .mobile-callbar__text strong {

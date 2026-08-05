@@ -8,8 +8,12 @@ Built with **React + Vite**. Phone-number call-to-action throughout: `(516) 931-
 
 **V1 — "post pitch"**
 
-- **Desktop:** ready for presentation / client review
-- **Mobile:** not configured yet (do not treat current small-screen layout as final)
+| Surface | Status |
+|--------|--------|
+| **Desktop** | **FINISHED / FROZEN.** Do not change desktop layout or design. |
+| **Mobile** | **Active work.** All remaining refinements are mobile-only. |
+
+**Important:** Future edits must not affect the desktop version. Prefer changes inside mobile media queries / mobile-only UI so wide viewports stay identical to V1.
 
 ## Brand
 

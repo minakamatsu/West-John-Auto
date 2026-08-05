@@ -36,7 +36,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="footer__col">
+            <div className="footer__col footer__col--explore">
               <h4>Explore</h4>
               <a href="#services">Services</a>
               <a href="#about">About</a>

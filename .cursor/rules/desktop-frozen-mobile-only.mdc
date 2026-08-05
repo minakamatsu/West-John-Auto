@@ -1,0 +1,29 @@
+---
+description: Desktop V1 is finished and frozen; only refine mobile without breaking desktop
+alwaysApply: true
+---
+
+# Desktop finished — mobile-only refinements
+
+## Status (locked)
+
+- **Desktop version is COMPLETE and FROZEN** as of V1 — "post pitch".
+- From this point forward, **only the mobile version** may be refined, fixed, or redesigned.
+- Do **not** change desktop layout, spacing, typography, colors, section structure, or visual design unless the user **explicitly** asks to reopen desktop work.
+
+## Hard constraints
+
+1. **Do not affect desktop.** Any CSS/JS/component change must leave the desktop appearance identical.
+2. Prefer mobile-only overrides inside `@media (max-width: …)` (or equivalent mobile-only classes). Avoid editing base/desktop styles when a media-query override will do.
+3. If a shared file must change (e.g. a component), keep desktop markup/behavior intact; gate mobile-only UI with CSS or clearly scoped mobile conditionals.
+4. Before finishing a task, mentally verify: *Would this look different on a wide desktop viewport?* If yes, undo or re-scope under mobile breakpoints.
+5. Do not “improve,” restyle, or refactor desktop sections “while you’re here.”
+
+## What “mobile work” means
+
+- Breakpoints, hamburger/menu, sticky call bar, stacking, font sizes, padding, and touch targets **at mobile widths only**.
+- Desktop service boxes, hero photo treatment, about full-bleed layout, footer, trust bar, etc. stay as shipped in V1.
+
+## If unsure
+
+Ask the user before changing any style or structure that also applies above the mobile breakpoint.
