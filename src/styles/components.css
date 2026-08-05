@@ -1078,27 +1078,30 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* Full viewport minus call bar minus ~trust bar height
-       (extra ~36px = removed rating line so yellow moves up) */
-    min-height: calc(100svh - var(--callbar-h) - 204px);
-    padding: calc(var(--header-h) + 40px) 0 20px;
+    /*
+     * Leave room for yellow trust bar in the first viewport, but keep
+     * enough bottom padding so the fade never crowds the description
+     * (real phones report a shorter svh than Cursor’s preview).
+     */
+    min-height: calc(100svh - var(--callbar-h) - 115px);
+    padding: calc(var(--header-h) + 48px) 0 118px;
     overflow: hidden;
   }
 
-  /* Soft blue → yellow blend into the trust bar (no hard edge) */
+  /* Soft blue → yellow blend — behind copy so it can’t cover the blurb */
   .hero::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 72px;
-    z-index: 2;
+    height: 56px;
+    z-index: 0;
     pointer-events: none;
     background: linear-gradient(
       to bottom,
       rgba(7, 31, 78, 0) 0%,
-      rgba(7, 31, 78, 0.35) 40%,
+      rgba(7, 31, 78, 0.25) 45%,
       #ffce00 100%
     );
   }
@@ -1166,7 +1169,7 @@
     gap: 0;
     padding-top: 0;
     position: relative;
-    z-index: 1;
+    z-index: 2; /* above yellow fade + wheel */
   }
 
   .hero__content {
@@ -1195,10 +1198,10 @@
   }
 
   .hero__title {
-    font-size: clamp(2.55rem, 11.5vw, 3.25rem);
-    line-height: 1.05;
+    font-size: clamp(3rem, 13.5vw, 3.7rem);
+    line-height: 1.02;
     letter-spacing: 0.01em;
-    margin: 0 0 20px;
+    margin: 0 0 28px;
     max-width: 16ch;
     text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
   }
@@ -1212,27 +1215,27 @@
     font-size: 1rem;
     line-height: 1.35;
     color: rgba(255, 255, 255, 0.9);
-    /* Push CTAs down by ~2× this line’s type size */
-    margin: 0 0 calc(32px + 2em);
+    /* Extra air below meta so CTAs sit lower */
+    margin: 0 0 calc(40px + 2.25em);
     max-width: 16rem;
   }
 
   .hero__actions {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    margin: 0;
+    gap: 16px;
+    margin: 0 0 8px;
     width: 100%;
   }
 
   .hero__cta-mobile.btn,
   .hero__cta-call-mobile.btn {
     display: inline-flex;
-    width: min(100%, 14.5rem);
+    width: min(100%, 17rem);
     max-width: none;
-    min-height: 46px;
-    padding: 10px 18px;
-    font-size: 0.95rem;
+    min-height: 52px;
+    padding: 12px 22px;
+    font-size: 1.05rem;
     justify-content: center;
   }
 
@@ -1252,16 +1255,18 @@
 
   .hero__actions .hero__cta-mobile.btn,
   .hero__actions .hero__cta-call-mobile.btn {
-    width: min(100%, 14.5rem);
+    width: min(100%, 17rem);
   }
 
   .hero__desc-mobile {
     display: block;
-    margin: 18px 0 0;
+    margin: 28px 0 0;
     max-width: 18rem;
     font-size: 0.9rem;
     line-height: 1.45;
     color: rgba(232, 238, 248, 0.88);
+    position: relative;
+    z-index: 2; /* stay above the blue→yellow fade on real phone viewports */
   }
 
   /* Rating lives in the yellow trust bar — drop duplicate from hero */
