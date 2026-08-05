@@ -35,7 +35,7 @@ export default function Footer() {
                   business.mapQuery
                 )}`}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 <Pin />
                 {business.address.street}, {business.address.city}, {business.address.state}{' '}

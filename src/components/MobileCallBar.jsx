@@ -23,7 +23,7 @@ export default function MobileCallBar() {
           business.mapQuery
         )}`}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         aria-label="Get directions to West John Auto"
       >
         <Pin />

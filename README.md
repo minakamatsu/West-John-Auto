@@ -11,9 +11,9 @@ Built with **React + Vite**. Phone-number call-to-action throughout: `(516) 931-
 | Surface | Status |
 |--------|--------|
 | **Desktop** | **FINISHED / FROZEN.** Do not change desktop layout or design. |
-| **Mobile** | **Active work.** All remaining refinements are mobile-only. |
+| **Mobile** | **FINISHED / FINALIZED.** |
 
-**Important:** Future edits must not affect the desktop version. Prefer changes inside mobile media queries / mobile-only UI so wide viewports stay identical to V1.
+**Important:** Prefer changes that do not alter the frozen desktop V1 look.
 
 ## Brand
 
@@ -51,3 +51,15 @@ public/
 
 All business details (phone, address, hours, service list, review quotes) live in
 `src/data/business.js`. Change them there and every section updates automatically.
+
+## Security
+
+Production hardening for this static marketing site:
+
+- **HTTP security headers** in `vercel.json` (CSP, HSTS, frame denial, nosniff, Permissions-Policy, COOP/CORP)
+- **External links** use `rel="noopener noreferrer"`; map iframe is sandboxed
+- **Dev server** binds to `localhost` only (not the LAN) to avoid known Vite host-exposure issues
+- **Dependencies:** run `npm audit` periodically; keep Vite/React updated
+- **Secrets:** never commit `.env` / keys (ignored in `.gitignore`)
+
+If you deploy somewhere other than Vercel, copy the same header values from `vercel.json` into that host’s header config.

@@ -37,7 +37,7 @@ export default function Reviews() {
               business.name + ' ' + business.mapQuery
             )}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Read all {business.reviewCount} reviews on Google
           </a>

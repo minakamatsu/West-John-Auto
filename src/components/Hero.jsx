@@ -112,7 +112,7 @@ export default function Hero() {
               business.mapQuery
             )}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Get Directions <Arrow />
           </a>

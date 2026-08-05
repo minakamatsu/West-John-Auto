@@ -46,7 +46,7 @@ export default function Contact() {
                   business.mapQuery
                 )}`}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Get Directions <Arrow />
               </a>
@@ -75,7 +75,9 @@ export default function Contact() {
               )}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              allow="fullscreen"
               allowFullScreen
+              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
             />
           </div>
         </div>

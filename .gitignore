@@ -5,3 +5,16 @@ dist-ssr
 .vite
 .DS_Store
 npm-debug.log*
+
+# Secrets / local env — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.crt
+*.key
+
+# Editor / OS
+.idea
+.vscode/*
+!.vscode/extensions.json
