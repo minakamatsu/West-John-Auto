@@ -2,10 +2,19 @@
 
 Professional marketing website for **West John Auto** — Auto Repair & Auto Body in Hicksville, NY (serving drivers since 1990).
 
-Built with **React + Vite**. Fully responsive with a dedicated mobile layout, sticky one‑tap **Call Now** bar, and a phone‑number call‑to‑action throughout.
+Built with **React + Vite**. Phone-number call-to-action throughout: `(516) 931-8582`.
 
-- **Brand colors:** banana yellow (`#FFCE00`) + deep ocean blue (`#0A2E6E` / `#071F4E`), matching the storefront sign.
-- **Primary CTA:** the shop phone number `(516) 931-8582` (tap-to-call `tel:` links everywhere).
+## Version status
+
+**V1 — "post pitch"**
+
+- **Desktop:** ready for presentation / client review
+- **Mobile:** not configured yet (do not treat current small-screen layout as final)
+
+## Brand
+
+- **Colors:** banana yellow (`#FFCE00`) + deep ocean blue (`#0A2E6E` / `#071F4E`), matching the storefront sign
+- **Primary CTA:** shop phone number with tap-to-call `tel:` links
 
 ## Getting started
 
@@ -29,16 +38,12 @@ src/
   components/              Header, Hero, Services, About, Reviews, Contact, Footer, MobileCallBar
   hooks/useReveal.js       Scroll-in animations
   styles/                  global.css (theme tokens) + components.css (layout + responsive)
-public/favicon.svg
+public/
+  favicon.svg
+  images/                  Storefront + team photos for hero/about
 ```
 
 ## Updating content
 
 All business details (phone, address, hours, service list, review quotes) live in
 `src/data/business.js`. Change them there and every section updates automatically.
-
-## Mobile version
-
-The site is mobile-first responsive — resize the browser or open it on a phone.
-On small screens it uses a hamburger menu and a fixed bottom bar with **Call Now**
-and **Directions** buttons for one-tap access.

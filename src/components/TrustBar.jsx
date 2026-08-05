@@ -12,7 +12,7 @@ export default function TrustBar() {
     <section className="trustbar">
       <div className="container trustbar__inner">
         {stats.map((s) => (
-          <div className="trustbar__item reveal" key={s.label}>
+          <div className="trustbar__item" key={s.label}>
             <span className="trustbar__value">{s.value}</span>
             <span className="trustbar__label">{s.label}</span>
           </div>

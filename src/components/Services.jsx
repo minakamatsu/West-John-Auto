@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { serviceGroups, business } from '../data/business.js'
-import { ServiceIcon, Phone } from './Icons.jsx'
+import { ServiceIcon, Check, Phone } from './Icons.jsx'
 
 export default function Services() {
-  // First category open by default so visitors see how it works without clutter.
+  // Accordion state is only used on mobile; desktop shows all cards.
   const [openId, setOpenId] = useState(serviceGroups[0]?.title ?? null)
 
   return (
@@ -14,12 +14,37 @@ export default function Services() {
           <h2 className="section__title">
             Complete Auto Care, <span className="accent">Under One Roof</span>
           </h2>
-          <p className="section__lead">
+          <p className="section__lead section__lead--desktop">
+            From routine maintenance to collision repair, our technicians handle it all — quickly,
+            honestly, and done right the first time.
+          </p>
+          <p className="section__lead section__lead--mobile">
             Tap a category to see what&apos;s included — brakes, body work, inspections, Tesla OEM,
             and more.
           </p>
         </div>
 
+        {/* Desktop: service boxes */}
+        <div className="services-grid reveal">
+          {serviceGroups.map((group) => (
+            <article className="service-card" key={group.title}>
+              <div className="service-card__icon">
+                <ServiceIcon name={group.icon} />
+              </div>
+              <h3 className="service-card__title">{group.title}</h3>
+              <ul className="service-card__list">
+                {group.items.map((item) => (
+                  <li key={item}>
+                    <Check />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        {/* Mobile: compact accordion */}
         <div className="services-list reveal" role="list">
           {serviceGroups.map((group) => {
             const isOpen = openId === group.title

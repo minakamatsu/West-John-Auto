@@ -199,8 +199,9 @@ h1, h2, h3, h4 {
 
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  will-change: opacity, transform;
 }
 
 .reveal.is-visible {
@@ -210,20 +211,18 @@ h1, h2, h3, h4 {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-}
-
-/* On small screens, skip hide-until-scroll to avoid blank/ghost sections */
-@media (max-width: 720px) {
   .reveal {
     opacity: 1;
     transform: none;
+    transition: none;
+    will-change: auto;
   }
 }
 
 @media (hover: none) {
   .btn--primary:hover,
-  .btn--blue:hover {
+  .btn--blue:hover,
+  .service-card:hover {
     transform: none;
   }
 }

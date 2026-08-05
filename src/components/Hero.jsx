@@ -4,7 +4,7 @@ import { Phone, Pin, Star, Arrow } from './Icons.jsx'
 export default function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero__bg" aria-hidden="true" />
+      <div className="hero__bg" role="img" aria-label="West John Auto storefront on West John Street" />
       <div className="container hero__inner">
         <div className="hero__content">
           <span className="hero__since">Family owned & trusted since {business.since}</span>
