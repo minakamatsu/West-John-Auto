@@ -1,0 +1,152 @@
+/* shadcn / Base UI accordion look — scoped so desktop cards stay untouched */
+
+.ui-accordion {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.ui-accordion__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.ui-accordion__item:last-child {
+  border-bottom: none;
+}
+
+.ui-accordion__header {
+  margin: 0;
+}
+
+.ui-accordion__trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 14px;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--blue-800);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.ui-accordion__trigger:hover {
+  background: rgba(10, 46, 110, 0.04);
+}
+
+.ui-accordion__trigger:focus-visible {
+  outline: 2px solid var(--blue-600);
+  outline-offset: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+.ui-accordion__trigger[data-panel-open] {
+  background: rgba(10, 46, 110, 0.03);
+}
+
+.ui-accordion__chevron {
+  flex: none;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+
+.ui-accordion__trigger[data-panel-open] .ui-accordion__chevron {
+  transform: rotate(180deg);
+  color: var(--blue-700);
+}
+
+.ui-accordion__panel {
+  height: var(--accordion-panel-height);
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
+.ui-accordion__panel[data-starting-style],
+.ui-accordion__panel[data-ending-style] {
+  height: 0;
+}
+
+.ui-accordion__content {
+  padding: 0 14px 14px;
+  font-size: 0.9rem;
+  color: var(--slate);
+}
+
+/* Service-specific trigger layout inside mobile accordion */
+.services-acc__lead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.services-acc__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--blue-800), var(--blue-600));
+  color: var(--yellow);
+  flex: none;
+}
+
+.services-acc__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.services-acc__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.services-acc__title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  color: var(--blue-800);
+  line-height: 1.15;
+}
+
+.services-acc__count {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.services-acc__chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.services-acc__chips li {
+  background: var(--bg-soft);
+  color: var(--slate);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 0.74rem;
+  line-height: 1.25;
+}

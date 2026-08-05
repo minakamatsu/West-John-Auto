@@ -48,6 +48,10 @@
   font-weight: 800;
   font-size: 1.15rem;
   flex: none;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .brand__text {
@@ -496,120 +500,9 @@
   margin-top: 3px;
 }
 
-/* Accordion hidden on desktop */
+/* Mobile accordion (Base UI / shadcn) — hidden on desktop */
 .services-list {
   display: none;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.services-item {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.services-item.is-open {
-  border-color: rgba(10, 46, 110, 0.22);
-  box-shadow: var(--shadow-sm);
-}
-
-.services-item__trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 56px;
-  padding: 10px 14px;
-  text-align: left;
-  touch-action: manipulation;
-}
-
-.services-item__trigger:hover {
-  background: rgba(10, 46, 110, 0.03);
-}
-
-.services-item__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, var(--blue-800), var(--blue-600));
-  color: var(--yellow);
-  flex: none;
-}
-
-.services-item__icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.services-item__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1;
-}
-
-.services-item__title {
-  font-family: var(--font-head);
-  font-weight: 700;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  color: var(--blue-800);
-  line-height: 1.15;
-}
-
-.services-item__count {
-  font-size: 0.78rem;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.services-item__chevron {
-  width: 10px;
-  height: 10px;
-  border-right: 2px solid var(--blue-700);
-  border-bottom: 2px solid var(--blue-700);
-  transform: rotate(45deg);
-  margin: 0 6px 4px 0;
-  flex: none;
-  transition: transform 0.2s ease;
-}
-
-.services-item.is-open .services-item__chevron {
-  transform: rotate(-135deg);
-  margin-bottom: 0;
-  margin-top: 4px;
-}
-
-.services-item__panel {
-  padding: 0 14px 14px 66px;
-}
-
-.services-item__panel[hidden] {
-  display: none;
-}
-
-.services-item__chips {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.services-item__chips li {
-  background: var(--bg-soft);
-  color: var(--slate);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 5px 10px;
-  font-size: 0.78rem;
-  line-height: 1.25;
-  max-width: 100%;
 }
 
 .services__cta {
@@ -670,8 +563,14 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-top: 72px;
-  padding-bottom: 72px;
+}
+
+/* Vertical spacing must NOT live on .container — that rule sets padding: 0 … */
+.about__pad {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 72px 0;
 }
 
 .about__content {
@@ -916,6 +815,10 @@
 .footer {
   background: var(--blue-900);
   color: #cfdcf5;
+  /* Avoid subpixel/compositing hairlines on mobile GPUs */
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateZ(0);
 }
 
 /* Padding lives here (not on .container) so .container's padding: 0 20px
@@ -1017,10 +920,11 @@
   z-index: 90;
   padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
   gap: 8px;
-  background: rgba(7, 31, 78, 0.97);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* Solid bg — backdrop-filter often paints faint diagonal hairlines on mobile */
+  background: var(--blue-900);
   box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.3);
+  isolation: isolate;
+  transform: translateZ(0);
 }
 
 .mobile-callbar a {
@@ -1262,35 +1166,7 @@
   }
 
   .services-list {
-    display: flex;
-  }
-
-  .services-item__trigger {
-    min-height: 50px;
-    padding: 8px 12px;
-  }
-
-  .services-item__icon {
-    width: 34px;
-    height: 34px;
-  }
-
-  .services-item__icon svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .services-item__title {
-    font-size: 1.05rem;
-  }
-
-  .services-item__panel {
-    padding: 0 12px 12px;
-  }
-
-  .services-item__chips li {
-    font-size: 0.74rem;
-    padding: 4px 8px;
+    display: block;
   }
 
   .services__cta {
@@ -1305,7 +1181,7 @@
   }
 
   .about__bg {
-    background-position: 55% 30%;
+    background-position: 82% 28%;
     background-image:
       linear-gradient(
         180deg,
@@ -1317,9 +1193,8 @@
   }
 
   /* Match top inset to bottom inset (space below Call CTA → section edge) */
-  .about__inner {
-    padding-top: 56px;
-    padding-bottom: 56px;
+  .about__pad {
+    padding: 56px 0;
   }
 
   .about__content {
@@ -1384,30 +1259,9 @@
     padding: 4px 0;
   }
 
-  /* Explore as compact 2×2 tap targets instead of a tall list */
+  /* Hide Explore nav on mobile — header + page anchors cover it */
   .footer__col--explore {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .footer__col--explore h4 {
-    grid-column: 1 / -1;
-    margin-bottom: 2px;
-  }
-
-  .footer__col--explore a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 10px 8px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 0.88rem;
+    display: none;
   }
 
   .footer__bottom {
@@ -1432,9 +1286,5 @@
 
   .mobile-callbar__text strong {
     font-size: 1rem;
-  }
-
-  .services-item__title {
-    font-size: 1.1rem;
   }
 }

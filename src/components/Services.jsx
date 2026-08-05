@@ -1,10 +1,15 @@
-import { useState } from 'react'
 import { serviceGroups, business } from '../data/business.js'
 import { ServiceIcon, Check, Phone } from './Icons.jsx'
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './ui/accordion.jsx'
+import '../styles/accordion.css'
 
 export default function Services() {
-  // Accordion state is only used on mobile; desktop shows all cards.
-  const [openId, setOpenId] = useState(serviceGroups[0]?.title ?? null)
+  const firstValue = serviceGroups[0] ? `svc-${serviceGroups[0].icon}` : undefined
 
   return (
     <section className="section section--soft" id="services">
@@ -24,7 +29,7 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Desktop: service boxes */}
+        {/* Desktop: service boxes (frozen V1) */}
         <div className="services-grid reveal">
           {serviceGroups.map((group) => (
             <article className="service-card" key={group.title}>
@@ -44,53 +49,35 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Mobile: compact accordion */}
-        <div className="services-list reveal" role="list">
-          {serviceGroups.map((group) => {
-            const isOpen = openId === group.title
-            const panelId = `service-panel-${group.icon}`
-            const btnId = `service-btn-${group.icon}`
-
-            return (
-              <div
-                className={`services-item ${isOpen ? 'is-open' : ''}`}
-                key={group.title}
-                role="listitem"
-              >
-                <button
-                  type="button"
-                  id={btnId}
-                  className="services-item__trigger"
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpenId(isOpen ? null : group.title)}
-                >
-                  <span className="services-item__icon" aria-hidden="true">
-                    <ServiceIcon name={group.icon} />
-                  </span>
-                  <span className="services-item__meta">
-                    <span className="services-item__title">{group.title}</span>
-                    <span className="services-item__count">{group.items.length} services</span>
-                  </span>
-                  <span className="services-item__chevron" aria-hidden="true" />
-                </button>
-
-                <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={btnId}
-                  className="services-item__panel"
-                  hidden={!isOpen}
-                >
-                  <ul className="services-item__chips">
-                    {group.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            )
-          })}
+        {/* Mobile: shadcn-style Accordion (Base UI) */}
+        <div className="services-list reveal">
+          <Accordion defaultValue={firstValue ? [firstValue] : []} className="services-acc">
+            {serviceGroups.map((group) => {
+              const value = `svc-${group.icon}`
+              return (
+                <AccordionItem key={group.title} value={value}>
+                  <AccordionTrigger>
+                    <span className="services-acc__lead">
+                      <span className="services-acc__icon" aria-hidden="true">
+                        <ServiceIcon name={group.icon} />
+                      </span>
+                      <span className="services-acc__meta">
+                        <span className="services-acc__title">{group.title}</span>
+                        <span className="services-acc__count">{group.items.length} services</span>
+                      </span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="services-acc__chips">
+                      {group.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            })}
+          </Accordion>
         </div>
 
         <div className="services__cta reveal">
