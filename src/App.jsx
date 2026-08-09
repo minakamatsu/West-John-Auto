@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import { useReveal } from './hooks/useReveal.js'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
@@ -25,6 +26,7 @@ export default function App() {
       </main>
       <Footer />
       <MobileCallBar />
+      <Analytics />
     </>
   )
 }
