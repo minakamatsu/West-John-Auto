@@ -8,6 +8,8 @@ export const business = {
   since: 1990,
   phoneDisplay: '(516) 931-8582',
   phoneHref: 'tel:+15169318582',
+  /** GA4 Measurement ID (G-…). Prefer VITE_GA_MEASUREMENT_ID in Vercel env. */
+  gaMeasurementId: 'G-XWR4PXQG79',
   rating: 4.6,
   reviewCount: 408,
   address: {

@@ -1,4 +1,5 @@
 import { serviceGroups, business } from '../data/business.js'
+import { trackPhoneClick } from '../lib/analytics.js'
 import { ServiceIcon, Check, Phone } from './Icons.jsx'
 import {
   Accordion,
@@ -82,7 +83,11 @@ export default function Services() {
 
         <div className="services__cta reveal">
           <p>Not sure what your car needs? Call for a free diagnostic.</p>
-          <a href={business.phoneHref} className="btn btn--primary">
+          <a
+            href={business.phoneHref}
+            className="btn btn--primary"
+            onClick={() => trackPhoneClick('services')}
+          >
             <Phone />
             Call {business.phoneDisplay}
           </a>

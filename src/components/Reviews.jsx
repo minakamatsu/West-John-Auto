@@ -1,4 +1,5 @@
 import { reviews, business } from '../data/business.js'
+import { trackReviewsClick } from '../lib/analytics.js'
 import { Star } from './Icons.jsx'
 
 export default function Reviews() {
@@ -38,6 +39,7 @@ export default function Reviews() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackReviewsClick('reviews')}
           >
             Read all {business.reviewCount} reviews on Google
           </a>

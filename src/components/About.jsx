@@ -1,4 +1,5 @@
 import { business } from '../data/business.js'
+import { trackPhoneClick } from '../lib/analytics.js'
 import { Check, Phone } from './Icons.jsx'
 
 const highlights = [
@@ -41,7 +42,11 @@ export default function About() {
             </ul>
 
             <div className="about__actions">
-              <a href={business.phoneHref} className="btn btn--primary about__cta">
+              <a
+                href={business.phoneHref}
+                className="btn btn--primary about__cta"
+                onClick={() => trackPhoneClick('about')}
+              >
                 <Phone />
                 Call {business.phoneDisplay}
               </a>
