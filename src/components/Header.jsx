@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { business } from '../data/business.js'
-import { trackPhoneClick } from '../lib/analytics.js'
 import { Phone, Menu, Close } from './Icons.jsx'
 
 const links = [
@@ -63,7 +62,7 @@ export default function Header() {
           <a
             href={business.phoneHref}
             className="btn btn--primary header__cta"
-            onClick={() => trackPhoneClick('header')}
+            data-analytics="header"
           >
             <Phone />
             {business.phoneDisplay}
@@ -73,7 +72,7 @@ export default function Header() {
             href={business.phoneHref}
             className="header__call-icon"
             aria-label={`Call ${business.phoneDisplay}`}
-            onClick={() => trackPhoneClick('header_icon')}
+            data-analytics="header_icon"
           >
             <Phone />
           </a>
@@ -103,10 +102,8 @@ export default function Header() {
           <a
             href={business.phoneHref}
             className="btn btn--primary mobile-menu__cta"
-            onClick={() => {
-              trackPhoneClick('mobile_menu')
-              closeMenu()
-            }}
+            data-analytics="mobile_menu"
+            onClick={closeMenu}
           >
             <Phone />
             Call {business.phoneDisplay}

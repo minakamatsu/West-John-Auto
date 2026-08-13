@@ -1,5 +1,4 @@
 import { business } from '../data/business.js'
-import { trackPhoneClick, trackDirectionsClick } from '../lib/analytics.js'
 import { Phone, Pin, Clock, Arrow } from './Icons.jsx'
 
 const today = new Date().getDay() // 0 = Sunday
@@ -27,7 +26,7 @@ export default function Contact() {
             <a
               href={business.phoneHref}
               className="contact__phone"
-              onClick={() => trackPhoneClick('contact')}
+              data-analytics="contact"
             >
               <Phone />
               <span>
@@ -52,7 +51,7 @@ export default function Contact() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackDirectionsClick('contact')}
+                data-analytics="contact"
               >
                 Get Directions <Arrow />
               </a>

@@ -1,5 +1,4 @@
 import { business } from '../data/business.js'
-import { trackPhoneClick, trackDirectionsClick } from '../lib/analytics.js'
 import { Phone, Pin } from './Icons.jsx'
 
 export default function Footer() {
@@ -28,7 +27,7 @@ export default function Footer() {
           <div className="footer__cols">
             <div className="footer__col">
               <h4>Contact</h4>
-              <a href={business.phoneHref} onClick={() => trackPhoneClick('footer')}>
+              <a href={business.phoneHref} data-analytics="footer">
                 <Phone /> {business.phoneDisplay}
               </a>
               <a
@@ -37,7 +36,7 @@ export default function Footer() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackDirectionsClick('footer')}
+                data-analytics="footer"
               >
                 <Pin />
                 {business.address.street}, {business.address.city}, {business.address.state}{' '}

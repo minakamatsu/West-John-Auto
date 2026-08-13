@@ -1,5 +1,4 @@
 import { business } from '../data/business.js'
-import { trackPhoneClick, trackDirectionsClick } from '../lib/analytics.js'
 import { Phone, Pin, Star, Arrow } from './Icons.jsx'
 
 export default function Hero() {
@@ -50,7 +49,7 @@ export default function Hero() {
             <a
               href={business.phoneHref}
               className="btn btn--primary hero__call"
-              onClick={() => trackPhoneClick('hero')}
+              data-analytics="hero"
             >
               <Phone />
               Call {business.phoneDisplay}
@@ -65,7 +64,7 @@ export default function Hero() {
             <a
               href={business.phoneHref}
               className="btn btn--ghost hero__cta-call-mobile"
-              onClick={() => trackPhoneClick('hero_mobile')}
+              data-analytics="hero_mobile"
             >
               <Phone />
               Call Now
@@ -112,7 +111,7 @@ export default function Hero() {
             </li>
             <li>
               <Phone />
-              <a href={business.phoneHref} onClick={() => trackPhoneClick('hero_card')}>
+              <a href={business.phoneHref} data-analytics="hero_card">
                 {business.phoneDisplay}
               </a>
             </li>
@@ -124,7 +123,7 @@ export default function Hero() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackDirectionsClick('hero_card')}
+            data-analytics="hero_card"
           >
             Get Directions <Arrow />
           </a>

@@ -1,5 +1,4 @@
 import { business } from '../data/business.js'
-import { trackPhoneClick, trackDirectionsClick } from '../lib/analytics.js'
 import { Phone, Pin } from './Icons.jsx'
 
 // Sticky bottom bar for mobile — phone-first CTA in the thumb zone.
@@ -11,7 +10,7 @@ export default function MobileCallBar() {
         href={business.phoneHref}
         className="mobile-callbar__call"
         aria-label={`Call West John Auto at ${business.phoneDisplay}`}
-        onClick={() => trackPhoneClick('mobile_sticky')}
+        data-analytics="mobile_sticky"
       >
         <Phone />
         <span className="mobile-callbar__text">
@@ -27,7 +26,7 @@ export default function MobileCallBar() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Get directions to West John Auto"
-        onClick={() => trackDirectionsClick('mobile_sticky')}
+        data-analytics="mobile_sticky"
       >
         <Pin />
         <span>Directions</span>

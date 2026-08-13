@@ -1,5 +1,4 @@
 import { serviceGroups, business } from '../data/business.js'
-import { trackPhoneClick } from '../lib/analytics.js'
 import { ServiceIcon, Check, Phone } from './Icons.jsx'
 import {
   Accordion,
@@ -86,7 +85,7 @@ export default function Services() {
           <a
             href={business.phoneHref}
             className="btn btn--primary"
-            onClick={() => trackPhoneClick('services')}
+            data-analytics="services"
           >
             <Phone />
             Call {business.phoneDisplay}

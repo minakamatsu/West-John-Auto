@@ -4,8 +4,8 @@
  * Important: phone_click proves someone tapped Call — not that the call
  * connected or was answered. Label reports as "call-button clicks."
  *
- * Set VITE_GA_MEASUREMENT_ID (e.g. G-XXXXXXXX) in Vercel env, or set
- * business.gaMeasurementId in src/data/business.js.
+ * The Google tag is loaded from index.html (earliest possible) so events
+ * still send when a tel: link opens the phone dialer.
  */
 import { business } from '../data/business.js'
 
@@ -14,34 +14,64 @@ const MEASUREMENT_ID =
   business.gaMeasurementId ||
   ''
 
-/** Load gtag.js once and configure the GA4 property (no-op if ID missing). */
+function ensureGtag() {
+  if (typeof window === 'undefined') return false
+  window.dataLayer = window.dataLayer || []
+  if (typeof window.gtag !== 'function') {
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments)
+    }
+  }
+  return true
+}
+
+/** Ensure gtag stub exists + bind resilient click capture for tel:/maps links. */
 export function initAnalytics() {
   if (!MEASUREMENT_ID || typeof document === 'undefined') return
-  if (window.__wjGaInitialized) return
-  window.__wjGaInitialized = true
+  ensureGtag()
 
-  window.dataLayer = window.dataLayer || []
-  window.gtag = function gtag() {
-    // GA queues commands until gtag.js finishes loading
-    window.dataLayer.push(arguments)
-  }
+  if (window.__wjGaClickBound) return
+  window.__wjGaClickBound = true
 
-  window.gtag('js', new Date())
-  window.gtag('config', MEASUREMENT_ID, {
-    anonymize_ip: true,
-    send_page_view: true,
-  })
+  // Capture phase: fires before navigation / dialer steals the page
+  document.addEventListener(
+    'click',
+    (event) => {
+      const link = event.target?.closest?.('a[href]')
+      if (!link) return
 
-  const script = document.createElement('script')
-  script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`
-  document.head.appendChild(script)
+      const href = link.getAttribute('href') || ''
+      const location =
+        link.getAttribute('data-analytics') ||
+        link.dataset.analytics ||
+        'unknown'
+
+      if (href.startsWith('tel:')) {
+        trackPhoneClick(location)
+        return
+      }
+
+      if (
+        href.includes('google.com/maps') ||
+        href.includes('maps.google.com')
+      ) {
+        // Reviews CTA is also a maps URL — prefer explicit data-analytics name
+        if (location === 'reviews') {
+          trackReviewsClick(location)
+        } else {
+          trackDirectionsClick(location)
+        }
+      }
+    },
+    true
+  )
 }
 
 /** Call-button tap (website lead action — not a confirmed phone call). */
 export function trackPhoneClick(buttonLocation) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  if (!ensureGtag()) return
   window.gtag('event', 'phone_click', {
+    send_to: MEASUREMENT_ID,
     button_location: buttonLocation,
     phone_number: business.phoneHref.replace(/^tel:/, ''),
     transport_type: 'beacon',
@@ -50,8 +80,9 @@ export function trackPhoneClick(buttonLocation) {
 
 /** Directions / maps tap. */
 export function trackDirectionsClick(buttonLocation) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  if (!ensureGtag()) return
   window.gtag('event', 'directions_click', {
+    send_to: MEASUREMENT_ID,
     button_location: buttonLocation,
     transport_type: 'beacon',
   })
@@ -59,8 +90,9 @@ export function trackDirectionsClick(buttonLocation) {
 
 /** Google reviews CTA tap. */
 export function trackReviewsClick(buttonLocation = 'reviews') {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  if (!ensureGtag()) return
   window.gtag('event', 'reviews_click', {
+    send_to: MEASUREMENT_ID,
     button_location: buttonLocation,
     transport_type: 'beacon',
   })
