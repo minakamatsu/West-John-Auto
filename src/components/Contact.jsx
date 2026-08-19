@@ -52,6 +52,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-analytics="contact"
+                data-accelerator-action="directions"
               >
                 Get Directions <Arrow />
               </a>

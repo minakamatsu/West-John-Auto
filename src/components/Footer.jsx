@@ -37,6 +37,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-analytics="footer"
+                data-accelerator-action="directions"
               >
                 <Pin />
                 {business.address.street}, {business.address.city}, {business.address.state}{' '}
@@ -49,7 +50,9 @@ export default function Footer() {
               <a href="#services">Services</a>
               <a href="#about">About</a>
               <a href="#reviews">Reviews</a>
-              <a href="#contact">Contact</a>
+              <a href="#contact" data-accelerator-action="contact">
+                Contact
+              </a>
             </div>
           </div>
         </div>

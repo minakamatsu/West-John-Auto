@@ -124,6 +124,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             data-analytics="hero_card"
+            data-accelerator-action="directions"
           >
             Get Directions <Arrow />
           </a>

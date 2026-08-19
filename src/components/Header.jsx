@@ -52,7 +52,14 @@ export default function Header() {
 
         <nav className="nav" aria-label="Primary">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="nav__link">
+            <a
+              key={l.href}
+              href={l.href}
+              className="nav__link"
+              {...(l.href === '#contact'
+                ? { 'data-accelerator-action': 'contact' }
+                : {})}
+            >
               {l.label}
             </a>
           ))}
@@ -94,7 +101,15 @@ export default function Header() {
         <div id="mobile-nav" className="mobile-menu mobile-menu--open">
           <nav className="mobile-menu__nav" aria-label="Mobile">
             {links.map((l) => (
-              <a key={l.href} href={l.href} className="mobile-menu__link" onClick={closeMenu}>
+              <a
+                key={l.href}
+                href={l.href}
+                className="mobile-menu__link"
+                onClick={closeMenu}
+                {...(l.href === '#contact'
+                  ? { 'data-accelerator-action': 'contact' }
+                  : {})}
+              >
                 {l.label}
               </a>
             ))}

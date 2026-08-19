@@ -27,6 +27,7 @@ export default function MobileCallBar() {
         rel="noopener noreferrer"
         aria-label="Get directions to West John Auto"
         data-analytics="mobile_sticky"
+        data-accelerator-action="directions"
       >
         <Pin />
         <span>Directions</span>
